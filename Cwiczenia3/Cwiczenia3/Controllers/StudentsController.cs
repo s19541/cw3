@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Cwiczenia3.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cwiczenia3.Controllers
@@ -19,7 +21,26 @@ namespace Cwiczenia3.Controllers
         [HttpGet]
         public IActionResult GetStudents(string orderBy)
         {
-            return Ok(_dbService.GetStudents());
+            var stList = new List<Student>();
+            using (var connection = new SqlConnection("Data Source=db-mssql;Initial Catalog=s19541;Integrated Security=True"))
+            using (var com = new SqlCommand())
+            {
+                com.Connection = connection;
+                com.CommandText = "select * from Student";
+
+                connection.Open();
+                var dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    var st = new Student();
+                    st.FirstName = dr["FirstName"].ToString();
+                    st.LastName = dr["LastName"].ToString();
+                    st.IndexNumber = dr["IndexNumber"].ToString();
+                    stList.Add(st);
+                }
+            }
+            return Ok(stList);
+            //return Ok(_dbService.GetStudents());
         }
         public string GetStudent(string orderBy)
         {
