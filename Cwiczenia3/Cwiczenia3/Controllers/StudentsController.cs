@@ -33,9 +33,12 @@ namespace Cwiczenia3.Controllers
                 while (dr.Read())
                 {
                     var st = new Student();
-                    st.FirstName = dr["FirstName"].ToString();
-                    st.LastName = dr["LastName"].ToString();
-                    st.IndexNumber = dr["IndexNumber"].ToString();
+                    st.indexNumber = dr["IndexNumber"].ToString();
+                    st.firstName = dr["FirstName"].ToString();
+                    st.lastName = dr["LastName"].ToString();
+                    st.birthDate = (DateTime)dr["BirthDate"];
+                    st.idEnrollment = Int32.Parse(dr["IdEnrollment"].ToString());
+                    
                     stList.Add(st);
                 }
             }
@@ -49,7 +52,7 @@ namespace Cwiczenia3.Controllers
         [HttpGet("{id}")]
         public IActionResult GetStudent(int id)
         {
-            if(id == 1)
+            /*if(id == 1)
             {
                 return Ok("Kowalski");
             }
@@ -57,12 +60,45 @@ namespace Cwiczenia3.Controllers
             {
                 return Ok("Malewski");
             }
-            return NotFound("Nie znaleziono studenta");
+            return NotFound("Nie znaleziono studenta");*/
+            Enrollment en=new Enrollment();
+            int eId;
+            using (var connection = new SqlConnection("Data Source=db-mssql;Initial Catalog=s19541;Integrated Security=True"))
+            using (var com = new SqlCommand())
+            {
+
+                com.Connection = connection;
+                com.CommandText = "select * from Student where IndexNumber=@id";
+                com.Parameters.AddWithValue("id", id);
+
+                connection.Open();
+                var dr = com.ExecuteReader();
+                dr.Read();
+                eId = Int32.Parse(dr["IdEnrollment"].ToString());
+                connection.Close();
+
+                com.CommandText = "select * from Enrollment where IdEnrollment="+eId;
+
+                connection.Open();
+                dr = com.ExecuteReader();
+                dr.Read();
+
+
+                    en.idEnrollment = Int32.Parse(dr["IdEnrollment"].ToString());
+                    en.semestr = Int32.Parse(dr["Semester"].ToString());
+                    en.idStudies = Int32.Parse(dr["IdStudy"].ToString());
+                    en.startDate = (DateTime)dr["StartDate"];
+
+                    
+               
+            }
+            return Ok(en);
+
         }
         [HttpPost]
         public IActionResult CreateStudent(Models.Student student)
         {
-            student.IndexNumber = $"s{new Random().Next(1, 20000)}";
+            student.indexNumber = $"s{new Random().Next(1, 20000)}";
             return Ok(student);
         }
         [HttpPut("{id}")]

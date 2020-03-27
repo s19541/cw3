@@ -14,9 +14,9 @@ namespace Cwiczenia3.DAL
         {
             _students = new List<Student>
             {
-                new Student{IdStudent=1,FirstName="Jan",LastName="Kowalski"},
-                new Student{IdStudent=2,FirstName="Anna",LastName="Malewski"},
-                new Student{IdStudent=3,FirstName="Andrzej",LastName="Andrzejewicz"}
+                new Student{indexNumber="s195",firstName="Jan",lastName="Kowalski"},
+                new Student{indexNumber="s195333",firstName="Anna",lastName="Malewski"},
+                new Student{indexNumber="s1",firstName="Andrzej",lastName="Andrzejewicz"}
             };
         }
         public IEnumerable<Student> GetStudents()
