@@ -26,6 +26,7 @@ namespace Cwiczenia3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<DAL.IDbService, DAL.MockDbService>();
+            services.AddSingleton<Services.IStudentsDbService,Services.SqlServerDbService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
         }
