@@ -32,9 +32,23 @@ namespace Cwiczenia3.MiddleWares
                 {
                     bodyStr = await reader.ReadToEndAsync();
                 }
+                string fileString = "";
+                fileString += metoda;
+                fileString += " " + sciezka;
+                fileString += " " + bodyStr;
+                fileString += " " + querystring;
+                string logFile = @"logginFile.txt";
+                FileInfo f = new FileInfo(logFile);
+                try
+                {
+                    StreamWriter logStream = new StreamWriter(f.OpenWrite());
+                    logStream.Write(fileString);
+                    logStream.Close();
+                }
+                catch(Exception e){}
 
-                //logowanie do pliku
-            }
+                 
+                }
 
             await _next(httpContext);
         }

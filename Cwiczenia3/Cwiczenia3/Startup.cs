@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,7 @@ namespace Cwiczenia3
                 app.UseHsts();
             }
 
-            //app.UseMiddleware<MiddleWares.LoggingMiddleware>();
+            app.UseMiddleware<MiddleWares.LoggingMiddleware>();
             app.UseHttpsRedirection();
             app.UseMvc();
             app.Use(async (context, next) =>
@@ -57,17 +58,34 @@ namespace Cwiczenia3
                 if (!context.Request.Headers.ContainsKey("Index"))
                 {
                     context.Response.StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("Nie podales loginu i hasla");
+                    await context.Response.WriteAsync("Brak nagłówku z indexem");
                     return;
                 }
                 else
                 {
-                    ////Sprawdzamy w bazie czy istnieje (SqlConnection)
                     string index = context.Request.Headers["Index"].ToString();
-                    //...
-                    //new SqlConnection()
-                    //dbService.CheckIndexNumber(index);
-                    //401 - return
+                    var connection = new SqlConnection("Data Source=db-mssql;Initial Catalog=s19541;Integrated Security=True");
+                    using(var com = new SqlCommand())
+                    {
+                        com.Connection = connection;
+                        com.CommandText = "select IndexNumber from Student";
+                        connection.Open();
+                        var dr = com.ExecuteReader();
+                        Boolean tmp = false;
+                        while (dr.Read())
+                        {
+                            if (dr["IndexNumber"].ToString().Equals(index))
+                                tmp = true;
+                            
+                        }
+                        if(!tmp)
+                        {
+                            context.Response.StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound;
+                            await context.Response.WriteAsync("Brak studenta z podanym indexem");
+                            return;
+                        }
+                    }
+                    connection.Close();
                 }
 
                 await next();

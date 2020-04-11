@@ -1,0 +1,12 @@
+GET /api/enrollments {
+	"indexNumber": 6,
+	"FirstName": "Norbert",
+	"LastName": "Gierczak",
+	"birthDate":"2001-01-01T00:00:01",
+	"studies":"IT"
+//	"studies":"IT",
+//	"semester":3 
+	
+	
+}	
+	 
