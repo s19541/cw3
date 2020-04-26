@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Cwiczenia3.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Cwiczenia3.Services
+namespace Cwiczenia3.services
 {
     public class SqlServerDbService : IStudentsDbService
     {

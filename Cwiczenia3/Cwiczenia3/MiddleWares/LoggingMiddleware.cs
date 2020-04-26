@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Cwiczenia3.Services;
+using Cwiczenia3.services;
 namespace Cwiczenia3.MiddleWares
 {
     public class LoggingMiddleware

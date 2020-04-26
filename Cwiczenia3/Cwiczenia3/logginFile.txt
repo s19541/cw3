@@ -1,12 +1,25 @@
-GET /api/enrollments {
-	"indexNumber": 6,
-	"FirstName": "Norbert",
-	"LastName": "Gierczak",
-	"birthDate":"2001-01-01T00:00:01",
-	"studies":"IT"
-//	"studies":"IT",
-//	"semester":3 
-	
-	
+POST /api/enrollments/promotions {
+
+	"studies":"IT",
+	"semester":3 
+}	
+	 ,
+//	"indexNumber": 3,
+//	"FirstName": "Norbert",
+//	"LastName": "Gierczak",
+//	"birthDate":"2001-01-01T00:00:01",
+	"studies":"IT",
+	"semester":3 
+	//"name":"Simba",
+	//"type":"lion",
+//	"admissionDate":"2001-01-01T00:00:01",
+//	"procedures":[
+//			{"idProcedure":1,
+//			"date":"2001-01-01T00:00:01"
+//			},
+//			{"idProcedure":2,
+//			"date":"2003-01-01T00:00:01"
+//			}
+//			]
 }	
 	 
