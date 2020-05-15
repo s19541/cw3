@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cwiczenia3.services
 {
-    public class SqlServerDbService : IStudentsDbService
+    public class SqlServerDbService //: IStudentsDbService
     {
         public Models.Enrollment createEnrollment(EnrollmentRequest request)
         {

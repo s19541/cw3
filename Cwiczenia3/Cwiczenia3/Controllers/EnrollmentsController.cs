@@ -13,8 +13,8 @@ namespace Cwiczenia3.Controllers
     public class EnrollmentsController : ControllerBase
     {
         public IConfiguration Configuration { get; set; }
-        private readonly services.IStudentsDbService _dbService;
-        public EnrollmentsController(services.IStudentsDbService dbService, IConfiguration configuration)
+        private readonly Services.IStudentsDbService _dbService;
+        public EnrollmentsController(Services.IStudentsDbService dbService, IConfiguration configuration)
        {
             _dbService = dbService;
             Configuration = configuration;
@@ -22,19 +22,15 @@ namespace Cwiczenia3.Controllers
         [HttpPost]
         public IActionResult createEnrollment(Requests.EnrollmentRequest request)
         {
-            Models.Enrollment e=_dbService.createEnrollment(request);
-            if (e != null)
-                return Created("enrollment",e);
-            return BadRequest();
+
+            return _dbService.createEnrollment(request);
         }
    
         [HttpPost("promotions")]
         public IActionResult createPromotion(Requests.PromotionRequestcs request)
         {
-            Models.Enrollment e = _dbService.createPromotion(request);
-            if (e != null)
-                return Created("enrollment", e);
-            return NotFound();
+          
+            return _dbService.createPromotion(request); 
         }
         [HttpPost]
         public IActionResult login(DTOs.LoginRequestDto request)

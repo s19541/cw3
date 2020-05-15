@@ -12,13 +12,28 @@ namespace Cwiczenia3.Controllers
     [Route("api/students")]
     public class StudentsController : ControllerBase
     {
-        private readonly DAL.IDbService _dbService;
-
-        public StudentsController(DAL.IDbService dbService)
+        private readonly Services.IStudentsDbService _dbService;
+        public StudentsController(Services.IStudentsDbService dbService)
         {
             _dbService = dbService;
         }
+
         [HttpGet]
+        public IActionResult GetStudents()
+        {
+            return Ok(_dbService.getStudents());
+        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStudent(string id)
+        {
+            return Ok(_dbService.deleteStudent(id));
+        }
+        [HttpPost]
+        public IActionResult ModifyStudent(ModelsF.Student student)
+        {
+            return Ok(_dbService.modifyStudent(student));
+        }
+       /* [HttpGet]
         public IActionResult GetStudents(string orderBy)
         {
             var stList = new List<Student>();
@@ -43,7 +58,7 @@ namespace Cwiczenia3.Controllers
                 }
             }
             return Ok(stList);
-            //return Ok(_dbService.GetStudents());
+            return Ok(_dbService.GetStudents());
         }
         public string GetStudent(string orderBy)
         {
@@ -52,7 +67,7 @@ namespace Cwiczenia3.Controllers
         [HttpGet("{id}")]
         public IActionResult GetStudent(int id)
         {
-            /*if(id == 1)
+            if(id == 1)
             {
                 return Ok("Kowalski");
             }
@@ -60,7 +75,7 @@ namespace Cwiczenia3.Controllers
             {
                 return Ok("Malewski");
             }
-            return NotFound("Nie znaleziono studenta");*/
+            return NotFound("Nie znaleziono studenta");
             Enrollment en=new Enrollment();
             int eId;
             using (var connection = new SqlConnection("Data Source=db-mssql;Initial Catalog=s19541;Integrated Security=True"))
@@ -118,6 +133,6 @@ namespace Cwiczenia3.Controllers
                 return Ok("Usuwanie ukończone");
             }
             return NotFound("Nie znaleziono studenta");
-        }
+        }*/
     }
 }

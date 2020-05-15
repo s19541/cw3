@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,9 +31,14 @@ namespace Cwiczenia3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<DAL.IDbService, DAL.MockDbService>();
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //services.AddSingleton<DAL.IDbService, DAL.MockDbService>(); 
+            services.AddScoped<Services.IStudentsDbService, Services.EfStudentDbService>();
+            services.AddDbContext<ModelsF.s19541Context>(opt =>
+            {
+                opt.UseSqlServer("Data Source=db-mssql;Initial Catalog=s19541;Integrated Security=True");
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                    .AddJwtBearer(options =>
                    {
                        options.TokenValidationParameters = new TokenValidationParameters
@@ -44,8 +50,8 @@ namespace Cwiczenia3
                            ValidAudience = "Students",
                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
                        };
-                   });
-            services.AddTransient<services.IStudentsDbService, services.SqlServerDbService>();
+                   });*/
+            //services.AddTransient<services.IStudentsDbService, services.SqlServerDbService>();
             //services.AddTransient<DAL.IDbService, Services.SqlServerDbService>();
             //services.AddControllers();
         }
@@ -64,7 +70,7 @@ namespace Cwiczenia3
 
             //app.UseMiddleware<MiddleWares.LoggingMiddleware>();
             app.UseHttpsRedirection();
-            //app.UseMvc();
+            app.UseMvc();
             /*app.Use(async (context, next) =>
             {
 
