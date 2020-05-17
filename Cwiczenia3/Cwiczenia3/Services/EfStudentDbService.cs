@@ -2,10 +2,12 @@
 using Cwiczenia3.Requests;
 using Cwiczenia3.services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 
 
@@ -102,8 +104,9 @@ namespace Cwiczenia3.Services
             if (!tmp.Any())
                 return new BadRequestResult();
 
-            
-            //TODO wywolac procedure
+                _context.Database.ExecuteSqlInterpolated($"PromoteStudents {request.semester},{request.studies}");
+                _context.SaveChanges();
+           
             return new OkObjectResult(request);
         }
     

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
@@ -32,7 +30,7 @@ namespace Cwiczenia3.Controllers
           
             return _dbService.createPromotion(request); 
         }
-        [HttpPost]
+       /* [HttpPost]
         public IActionResult login(DTOs.LoginRequestDto request)
         {
             var claims = new[]
@@ -58,6 +56,6 @@ namespace Cwiczenia3.Controllers
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 refreshToken=Guid.NewGuid()
             });
-        }
+        }*/
     }
 }

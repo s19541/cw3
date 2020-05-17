@@ -10,7 +10,7 @@ namespace Cwiczenia3.services
 {
     public class SqlServerDbService //: IStudentsDbService
     {
-        public Models.Enrollment createEnrollment(EnrollmentRequest request)
+       /* public Models.Enrollment createEnrollment(EnrollmentRequest request)
         {
             var connection = new SqlConnection("Data Source=db-mssql;Initial Catalog=s19541;Integrated Security=True");
             connection.Open();
@@ -154,6 +154,6 @@ namespace Cwiczenia3.services
                         return false;
                 return true;
             }
-        }
+        }*/
     }
 }
